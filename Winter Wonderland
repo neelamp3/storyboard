@@ -1,0 +1,37 @@
+#NeelamPersaud 
+#PRD5&6
+
+import simplegui
+import random
+
+# global variables
+width = 600
+height = 400
+number_snowflakes = 40
+snowfall_speed = 1
+
+# global variables for controlling snowflakes
+snow_y = []
+
+#snowflake position in a global list
+for i in range(number_snowflakes):
+    snow_y.append(random.randint(0, height))  # Snowflake vertical positions
+
+def winter(canvas):
+    canvas.draw_polygon([(0, 0), (width, 0), (width, height), (0, height)], 1, "DarkBlue", "LightBlue")  # Fixed parentheses
+
+    for i in range(number_snowflakes):
+        snowFlakeX = random.randint(0, width)
+        canvas.draw_circle((snowFlakeX, snow_y[i]), 5, 1, "blue", "white")
+        snow_y[i] += snowfall_speed  
+       
+        if snow_y[i] > height:  # Reset snowflake to the top if it falls off the screen
+            snow_y[i] = 0
+
+# create a frame and set up the draw handler
+frame = simplegui.create_frame("Winter Wonderland", width, height)
+frame.set_draw_handler(winter)
+
+# start animation
+frame.start()
+
