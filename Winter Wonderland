@@ -35,3 +35,229 @@ frame.set_draw_handler(winter)
 # start animation
 frame.start()
 
+
+
+
+
+
+
+
+
+
+SPACE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import simplegui
+
+import random
+
+
+# global variables
+
+width = 600
+
+height = 400
+
+number_snowflakes = 40
+
+snowfall_speed = 1
+
+
+# global variables for controlling snowflakes
+
+snow_y = []
+
+
+# initialize the snowflake position in a global list 
+
+for i in range(number_snowflakes):
+
+    snow_y.append(random.randint(0, height))  # Snowflake vertical positions
+
+
+def draw_house(canvas):
+
+    # Main square of the house
+
+    house_x = 200  # X-coordinate of the top-left corner of the house
+
+    house_y = 200  # Y-coordinate of the top-left corner of the house
+
+    house_size = 150
+
+    canvas.draw_polygon([(house_x, house_y),
+
+                         (house_x + house_size, house_y),
+
+                         (house_x + house_size, house_y + house_size),
+
+                         (house_x, house_y + house_size)],
+
+                        1, "Black", "Brown")
+
+    
+
+    # Roof (triangle)
+
+    canvas.draw_polygon([(house_x, house_y),  # Top-left corner of house
+
+                         (house_x + house_size, house_y),  # Top-right corner of house
+
+                         (house_x + house_size // 2, house_y - house_size // 2)],  # Top of the roof
+
+                        1, "Black", "DarkRed")
+
+    
+
+    # Door (rectangle)
+
+    door_x = house_x + house_size // 2 - 20  # Centered horizontally
+
+    door_y = house_y + house_size - 50  # Slightly above the bottom
+
+    door_width = 40
+
+    door_height = 50
+
+    canvas.draw_polygon([(door_x, door_y),
+
+                         (door_x + door_width, door_y),
+
+                         (door_x + door_width, door_y + door_height),
+
+                         (door_x, door_y + door_height)],
+
+                        1, "Black", "Blue")
+
+    
+
+    # Windows (two squares)
+
+    window_size = 30
+
+    window1_x = house_x + 20  # Left window
+
+    window1_y = house_y + 30
+
+    window2_x = house_x + house_size - 50  # Right window
+
+    window2_y = house_y + 30
+
+    
+
+    # Left window
+
+    canvas.draw_polygon([(window1_x, window1_y),
+
+                         (window1_x + window_size, window1_y),
+
+                         (window1_x + window_size, window1_y + window_size),
+
+                         (window1_x, window1_y + window_size)],
+
+                        1, "Black", "LightBlue")
+
+    # Left window cross
+
+    canvas.draw_line((window1_x, window1_y + window_size // 2), 
+
+                     (window1_x + window_size, window1_y + window_size // 2), 
+
+                     1, "Black")
+
+    canvas.draw_line((window1_x + window_size // 2, window1_y), 
+
+                     (window1_x + window_size // 2, window1_y + window_size), 
+
+                     1, "Black")
+
+    
+
+    # Right window
+
+    canvas.draw_polygon([(window2_x, window2_y),
+
+                         (window2_x + window_size, window2_y),
+
+                         (window2_x + window_size, window2_y + window_size),
+
+                         (window2_x, window2_y + window_size)],
+
+                        1, "Black", "LightBlue")
+
+    # Right window cross
+
+    canvas.draw_line((window2_x, window2_y + window_size // 2), 
+
+                     (window2_x + window_size, window2_y + window_size // 2), 
+
+                     1, "Black")
+
+    canvas.draw_line((window2_x + window_size // 2, window2_y), 
+
+                     (window2_x + window_size // 2, window2_y + window_size), 
+
+                     1, "Black")
+
+
+def winter(canvas):
+
+    # Background
+
+    canvas.draw_polygon([(0, 0), (width, 0), (width, height), (0, height)], 1, "DarkBlue", "LightBlue")
+
+    
+
+    # Draw snowflakes
+
+    for i in range(number_snowflakes):
+
+        snowFlakeX = random.randint(0, width)
+
+        canvas.draw_circle((snowFlakeX, snow_y[i]), 5, 1, "blue", "white")
+
+        snow_y[i] += snowfall_speed  # Adjusts vertical position for snowfall
+
+        
+
+        if snow_y[i] > height:  # Reset snowflake to the top if it falls off the screen
+
+            snow_y[i] = 0
+
+    
+
+    # Draw the house
+
+    draw_house(canvas)
+
+
+# create a frame and set up the draw handler
+
+frame = simplegui.create_frame("Winter Wonderland", width, height)
+
+frame.set_draw_handler(winter)
+
+
+# start animation
+
+frame.start()
+
